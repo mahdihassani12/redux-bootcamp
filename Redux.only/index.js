@@ -31,9 +31,10 @@ const resetAction = () => {
 };
 
 // increment by amount action creator
-const increment_By_Amount_Action = () => {
+const increment_By_Amount_Action = (amount = 1) => {
   return {
     type: "INCREASE_BY_AMOUNT",
+    payload: amount,
   };
 };
 
@@ -49,7 +50,11 @@ const counterReducer = (state = initialState, action) => {
     };
   } else if (action.type === "RESET") {
     return {
-      count: state.count,
+      count: initialState.count,
+    };
+  } else if (action.type === "INCREASE_BY_AMOUNT") {
+    return {
+      count: state.count + action.payload,
     };
   }
 };
@@ -65,3 +70,5 @@ store.dispatch(incrementAction());
 store.dispatch(incrementAction());
 store.dispatch(decrementAction());
 store.dispatch(resetAction());
+store.dispatch(increment_By_Amount_Action());
+store.dispatch(increment_By_Amount_Action(10));
