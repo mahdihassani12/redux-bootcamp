@@ -1,4 +1,5 @@
 // Steps
+const { createStore } = require("redux");
 
 // Initial states
 
@@ -46,3 +47,5 @@ const counterReducer = (state = initialState, action) => {
 };
 
 // store
+const store = createStore(counterReducer);
+const stateData = store.getState();
