@@ -43,9 +43,25 @@ const counterReducer = (state = initialState, action) => {
     return {
       count: state.count + 1,
     };
+  } else if (action.type === "DECREMENT") {
+    return {
+      count: state.count - 1,
+    };
+  } else if (action.type === "RESET") {
+    return {
+      count: state.count,
+    };
   }
 };
 
 // store
 const store = createStore(counterReducer);
-const stateData = store.getState();
+store.subscribe(() => {
+  const data = store.getState();
+  console.log(data);
+});
+
+store.dispatch(incrementAction());
+store.dispatch(incrementAction());
+store.dispatch(decrementAction());
+store.dispatch(resetAction());
