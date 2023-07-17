@@ -37,6 +37,12 @@ const increment_By_Amount_Action = () => {
 };
 
 // reducers
-const counterReducer = (state = initialState, action) => {};
+const counterReducer = (state = initialState, action) => {
+  if (action.type === "INCREMENT") {
+    return {
+      count: state.count + 1,
+    };
+  }
+};
 
 // store
