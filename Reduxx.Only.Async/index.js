@@ -1,11 +1,13 @@
 const { createStore, applyMiddleware } = require("redux");
 const loggerMiddleware = require("redux-logger").createLogger();
+const thunk = require("redux-thunk").default;
+const axios = require("axios");
 
 // Initial state
 const initialState = {
   posts: [],
-  errors: '',
-  loading: false
+  errors: "",
+  loading: false,
 };
 
 // Actions
@@ -17,16 +19,33 @@ const fetchPostRequest = () => {
 };
 
 const FETCH_SUCCESS = "FETCH_SUCCESS";
-const fetchPostSuccess = () => {
+const fetchPostSuccess = (posts) => {
   return {
     type: FETCH_SUCCESS,
+    payload: posts,
   };
 };
 
 const FETCH_FAILURE = "FETCH_FAILURE";
-const fetchPostFailure = () => {
+const fetchPostFailure = (error) => {
   return {
     type: FETCH_FAILURE,
+    payload: error,
+  };
+};
+
+// action to make request
+const fetchPosts = () => {
+  return async (dispatch) => {
+    try {
+      dispatch(fetchPostRequest());
+      const data = await axios.get(
+        "https://jsonplaceholder.typicode.com/posts"
+      );
+      dispatch(fetchPostSuccess(data.data));
+    } catch (error) {
+      dispatch(fetchPostFailure(error.message));
+    }
   };
 };
 
@@ -35,20 +54,35 @@ const postsReducer = (state = initialState, action) => {
   switch (action.type) {
     case REQUEST_STARTED:
       return {
-        posts: ["HTML"],
+        ...state,
+        loading: true,
       };
-
+    case FETCH_SUCCESS:
+      return {
+        posts: action.payload,
+        loading: false,
+        error: "",
+      };
+    case FETCH_FAILURE:
+      return {
+        posts: [],
+        loading: false,
+        error: action.payload,
+      };
     default:
-      break;
+      return state;
   }
 };
 
 // Store
-const store = createStore(postsReducer, applyMiddleware(loggerMiddleware));
-const subscribe = () => {
+const store = createStore(
+  postsReducer,
+  applyMiddleware(thunk)
+);
+store.subscribe(() => {
   const data = store.getState();
   console.log(data);
-};
+});
 
 // Dispatch
-store.dispatch(fetchPostRequest());
+store.dispatch(fetchPosts());
