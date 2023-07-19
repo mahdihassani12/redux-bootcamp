@@ -4,6 +4,8 @@ const loggerMiddleware = require("redux-logger").createLogger();
 // Initial state
 const initialState = {
   posts: [],
+  errors: '',
+  loading: false
 };
 
 // Actions
