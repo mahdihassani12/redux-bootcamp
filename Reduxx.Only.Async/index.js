@@ -1,4 +1,6 @@
-const { createStore } = require("redux");
+const { createStore, applyMiddleware } = require("redux");
+const loggerMiddleware = require("redux-logger").createLogger();
+
 // Initial state
 const initialState = {
   posts: [],
@@ -27,13 +29,24 @@ const fetchPostFailure = () => {
 };
 
 // Reducer
-const postsReducer = (state = initialState, action) => {};
+const postsReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case REQUEST_STARTED:
+      return {
+        posts: ["HTML"],
+      };
+
+    default:
+      break;
+  }
+};
 
 // Store
-const store = createStore(postsReducer);
-const subscribe = (() => {
-    const data = store.getState();
-    console.log(data)
-})
+const store = createStore(postsReducer, applyMiddleware(loggerMiddleware));
+const subscribe = () => {
+  const data = store.getState();
+  console.log(data);
+};
 
 // Dispatch
+store.dispatch(fetchPostRequest());
