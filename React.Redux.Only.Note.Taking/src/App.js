@@ -1,8 +1,13 @@
 import "./App.css";
+import AddNotes from "./components/AddNotes";
+import NotesList from "./components/NotesList";
 
 function App() {
   return (
-    <h1>Hello world</h1>
+    <div className="App">
+      <AddNotes />
+      <NotesList />
+    </div>
   );
 }
 
