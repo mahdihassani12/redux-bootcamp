@@ -1,9 +1,10 @@
 // Actions
+import {ADD_NOTE, DELETE_NOTE, FETCH_NOTES} from './notesActionTypes';
 
 // Add note action creator
 export const addNoteAction = (note) => {
   return {
-    type: "ADD_NOTE",
+    type: ADD_NOTE,
     payload: note,
   };
 };
@@ -11,7 +12,7 @@ export const addNoteAction = (note) => {
 // Delete note action creator
 export const deleteNoteAction = (id) => {
   return {
-    type: "DELETE_NOTE",
+    type: DELETE_NOTE,
     payload: id,
   };
 };
@@ -19,6 +20,6 @@ export const deleteNoteAction = (id) => {
 // Fetch notes action creator
 export const fetchNotesAction = () => {
   return {
-    type: "FETCH_NOTES",
+    type: FETCH_NOTES,
   };
 };
