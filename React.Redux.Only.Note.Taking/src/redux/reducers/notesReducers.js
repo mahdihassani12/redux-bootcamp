@@ -11,15 +11,17 @@ const initialState = {
 const notesReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_NOTE:
+      const newState = {
+        id: Math.random(),
+        title: action.payload.title,
+        content: action.payload.content,
+      };
+
+      const updateNotes = [...state.notes, newState];
+      localStorage.setItem("notes", JSON.stringify(updateNotes));
+
       return {
-        notes: [
-          ...state.notes,
-          {
-            id: Math.random(),
-            title: action.payload.title,
-            content: action.payload.content,
-          },
-        ],
+        notes: [...state.notes, newState],
       };
     case DELETE_NOTE:
       return {};
@@ -30,4 +32,4 @@ const notesReducer = (state = initialState, action) => {
   }
 };
 
-export default notesReducer
+export default notesReducer;
