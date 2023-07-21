@@ -26,7 +26,11 @@ const notesReducer = (state = initialState, action) => {
     case DELETE_NOTE:
       return {};
     case FETCH_NOTES:
-      return {};
+      return {
+        notes: JSON.parse(localStorage.getItem("notes"))
+          ? JSON.parse(localStorage.getItem("notes"))
+          : [],
+      };
     default:
       break;
   }

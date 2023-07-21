@@ -1,19 +1,32 @@
 import React, { useEffect } from "react";
-
 import "./NotesList.css";
+import { fetchNotesAction } from "../redux/actions/noteActions";
+import { useDispatch, useSelector } from "react-redux";
 
 const NotesList = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchNotesAction());
+  }, []);
+
+  const notes = useSelector((storeData) => {
+    return storeData.notes;
+  });
+
   return (
     <>
       <h1>Notes List</h1>
 
-      <div className="item-container">
-        <div className="item-content">
-          <h2>some title</h2>
-          <p>some content</p>
-          <button>Delete</button>
+      {notes.map((note) => (
+        <div className="item-container" key={note.id}>
+          <div className="item-content">
+            <h2> { note.title } </h2>
+            <p> { note.content } </p>
+            <button>Delete</button>
+          </div>
         </div>
-      </div>
+      ))}
+
     </>
   );
 };
