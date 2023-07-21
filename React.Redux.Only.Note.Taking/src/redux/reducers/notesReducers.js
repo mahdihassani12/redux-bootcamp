@@ -13,7 +13,7 @@ const notesReducer = (state = initialState, action) => {
     case ADD_NOTE:
       return {
         notes: [
-          ...state,
+          ...state.notes,
           {
             id: Math.random(),
             title: action.payload.title,
