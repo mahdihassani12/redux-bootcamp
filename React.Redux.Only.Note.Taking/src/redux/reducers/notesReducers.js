@@ -24,7 +24,15 @@ const notesReducer = (state = initialState, action) => {
         notes: [...state.notes, newState],
       };
     case DELETE_NOTE:
-      return {};
+      const filteredNotes = state.notes.filter(
+        (note) => note.id !== action.payload
+      );
+      localStorage.setItem("notes", JSON.stringify(filteredNotes));
+
+      return {
+        ...state,
+        notes: filteredNotes,
+      };
     case FETCH_NOTES:
       return {
         notes: JSON.parse(localStorage.getItem("notes"))

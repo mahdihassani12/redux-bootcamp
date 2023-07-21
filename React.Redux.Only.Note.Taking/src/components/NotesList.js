@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "./NotesList.css";
-import { fetchNotesAction } from "../redux/actions/noteActions";
+import { fetchNotesAction, deleteNoteAction } from "../redux/actions/noteActions";
 import { useDispatch, useSelector } from "react-redux";
 
 const NotesList = () => {
@@ -22,7 +22,7 @@ const NotesList = () => {
           <div className="item-content">
             <h2> { note.title } </h2>
             <p> { note.content } </p>
-            <button>Delete</button>
+            <button onClick={() => dispatch(deleteNoteAction(note.id)) } >Delete</button>
           </div>
         </div>
       ))}
