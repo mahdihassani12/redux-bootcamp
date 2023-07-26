@@ -1,11 +1,20 @@
 import React from "react";
 import "./Form.css";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchPostAction } from "../redux/actions/postsActions";
+
 const SearchPost = () => {
+  
+  const dispatch = useDispatch();
   //search form state
   const [search, setSearch] = React.useState("");
   //search form submit handler
   const handleSubmit = e => {
     e.preventDefault();
+    if (search === "") {
+      return alert("Please provide a value");
+    }
+    dispatch(fetchPostAction(search));
   };
 
   return (

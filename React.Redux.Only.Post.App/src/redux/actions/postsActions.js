@@ -6,6 +6,7 @@ import {
   FETCH_POSTS_FAILURE,
   FETCH_POST_FAILURE
 } from "./postActionTypes";
+
 import axios from "axios";
 const apiURL = "https://jsonplaceholder.typicode.com/posts";
 
@@ -49,7 +50,7 @@ const fetchPostFailure = (error) => {
     };
   };
 
-const fetchPostsAction = () => {
+export const fetchPostsAction = () => {
   return async (dispatch) => {
     dispatch(fetchPostsRequest());
     try {
@@ -61,7 +62,7 @@ const fetchPostsAction = () => {
   };
 };
 
-const fetchPostAction = (id) => {
+export const fetchPostAction = (id) => {
     return async (dispatch) => {
       dispatch(fetchPostRequest());
       try {
