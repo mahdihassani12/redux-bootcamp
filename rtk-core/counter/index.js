@@ -1,4 +1,4 @@
-const { createAction, nanoid } = require("@reduxjs/toolkit");
+const { createAction, nanoid, createReducer } = require("@reduxjs/toolkit");
 
 // Initial state
 const initialState = {
@@ -9,15 +9,35 @@ const initialState = {
 const increment = createAction("INCREMENT");
 const decrement = createAction("DECREMENT");
 const reset = createAction("RESET");
-const incrementBy = createAction("INCREMENT_BY", (amount, user) => {
+const incrementBy = createAction("INCREMENT_BY", (amount) => {
   return {
     payload: {
       amount,
-      user,
-      id: nanoid(),
     },
   };
 });
 
 // reducer
+// 1. builder callback notation
+// 2. map object notation
+
+// builder callback notation
+createReducer(initialState, (builder) => {
+  builder.addCase(increment, (state) => {
+    state.count += 1;
+  });
+
+  builder.addCase(decrement, (state) => {
+    state.count -= 1;
+  });
+
+  builder.addCase(reset, (state) => {
+    state.count = 0;
+  });
+
+  builder.addCase(incrementBy, (state, action) => {
+    state.count += action.payload.amount;
+  });
+});
+
 // store
