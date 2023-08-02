@@ -1,4 +1,8 @@
-const { createAsyncThunk, createSlice } = require("@reduxjs/toolkit");
+const {
+  createAsyncThunk,
+  createSlice,
+  configureStore,
+} = require("@reduxjs/toolkit");
 const axios = require("axios");
 const API = "https://jsonplaceholder.typicode.com/posts";
 
@@ -11,12 +15,12 @@ const initialState = {
 
 // action async thunk
 const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
-  const data = axios.get(API);
-  return data;
+  const res = axios.get(API);
+  return res.data;
 });
 
 // slice
-createSlice({
+const postsSlice = createSlice({
   name: "posts",
   initialState,
   reducers: {},
@@ -40,4 +44,14 @@ createSlice({
   },
 });
 
+const postsReducer = postsSlice.reducer;
+
 // store
+const store = configureStore({
+  reducer: postsReducer,
+});
+
+store.subscribe(() => {
+  console.log(store.getState());
+});
+store.dispatch(fetchPosts());
