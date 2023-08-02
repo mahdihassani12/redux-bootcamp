@@ -1,4 +1,4 @@
-const { createAction, nanoid, createReducer } = require("@reduxjs/toolkit");
+const { createAction, nanoid, createReducer, configureStore } = require("@reduxjs/toolkit");
 
 // Initial state
 const initialState = {
@@ -41,22 +41,29 @@ const counterSlice = createReducer(initialState, (builder) => {
 });
 
 // map object notation
-const counterSlice2 = createReducer(initialState, {
-  [increment]: (state) => {
-    state.count += 1;
-  },
+// const counterSlice2 = createReducer(initialState, {
+//   [increment]: (state) => {
+//     state.count += 1;
+//   },
 
-  [decrement]: (state) => {
-    state.count -= 1;
-  },
+//   [decrement]: (state) => {
+//     state.count -= 1;
+//   },
 
-  [reset]: (state) => {
-    state.count = 0;
-  },
+//   [reset]: (state) => {
+//     state.count = 0;
+//   },
 
-  [incrementBy]: (state, action) => {
-    state.count += action.payload.amount;
-  },
-});
+//   [incrementBy]: (state, action) => {
+//     state.count += action.payload.amount;
+//   },
+// });
 
 // store
+const store = configureStore({ 
+  reducer: counterSlice
+});
+
+// dispatch action
+store.dispatch(increment());
+console.log(store.getState());
